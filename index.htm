@@ -149,7 +149,7 @@
 
     /* Blur effect */
     .blur {
-      filter: blur(50px);
+      filter: blur(5px);
       pointer-events: none;
       user-select: none;
     }
@@ -171,8 +171,8 @@
 
 <!-- Main Content Container -->
 <div id="content">
-  <!-- Background Music -->
-  <audio id="bg-music" autoplay loop>
+  <!-- Background Music (autoplay removed to support mobile) -->
+  <audio id="bg-music" loop>
     <source src="jil.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -200,16 +200,19 @@
   function closePopup() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('content').classList.remove('blur');
+
+    const music = document.getElementById('bg-music');
+    music.volume = 0.3;
+    music.play().catch((e) => {
+      console.log("Audio playback failed:", e);
+    });
   }
 
   window.onload = function () {
     document.getElementById('popup').style.display = 'block';
     document.getElementById('content').classList.add('blur');
 
-    const music = document.getElementById('bg-music');
-    music.volume = 0.3;
-    music.play();
-
+    // Generate confetti
     const container = document.getElementById('confetti-container');
     for (let i = 0; i < 100; i++) {
       const dot = document.createElement('div');
