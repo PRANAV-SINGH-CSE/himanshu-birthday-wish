@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1c1c1c;
+      --gold: #d4af37;
+      --text-light: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .floating-confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 8;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: var(--gold);
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: confetti-fall 10s linear infinite;
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translateY(-10%) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    .header {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      margin-top: 3rem;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .subtext {
+      font-size: 1.2rem;
+      color: #ddd;
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 0 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      width: 90%;
+      z-index: 2;
+    }
+
+    .card {
+      background-color: #2b2b2b;
+      border: 2px solid var(--gold);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .caption {
+      padding: 1rem;
+      font-size: 1rem;
+      text-align: center;
+      color: #f5f5f5;
+      font-weight: 600;
+      background-color: #1c1c1c;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      color: #aaa;
+      font-size: 1rem;
+      border-top: 1px solid #444;
+    }
+
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #2b2b2b;
+      border: 3px solid var(--gold);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      z-index: 9999;
+      display: none;
+      color: var(--text-light);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    }
+
+    #popup h2 {
+      margin: 0.5rem 0;
+      color: var(--gold);
+    }
+
+    #popup button {
+      margin-top: 1rem;
+      background: var(--gold);
+      color: #000;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #popup button:hover {
+      background: #c5a030;
+    }
+
+    /* Blur effect */
+    .blur {
+      filter: blur(50px);
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Confetti -->
+<div class="floating-confetti" id="confetti-container"></div>
+
+<!-- Popup -->
+<div id="popup">
+  <h2>Happy Birthday</h2>
+  <h2>Mr. Himanshu</h2>
+  <p>Wishing you success, peace, and a year full of accomplishments. 🎯</p>
+  <p>Stay awesome and keep inspiring!</p>
+  <button onclick="closePopup()">Cheers 🍻</button>
+</div>
+
+<!-- Main Content Container -->
+<div id="content">
+  <!-- Background Music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="jil.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Content -->
+  <div class="header">🎉 Happy Birthday, Himanshu 🎉</div>
+  <div class="subtext">Here’s to another year of greatness, style, and ambition. Let’s celebrate the man you are!</div>
+
+  <div class="gallery">
+    <div class="card">
+      <img src="7.jpeg" alt="Photo 1">
+      <div class="caption">Always rising, always real.</div>
+    </div>
+    <div class="card">
+      <img src="6.jpeg" alt="Photo 2">
+      <div class="caption">Style. Strength. Substance.</div>
+    </div>
+  </div>
+
+  <div class="footer">Built with pride by your best people 🖤</div>
+</div>
+
+<!-- Script -->
+<script>
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('content').classList.remove('blur');
+  }
+
+  window.onload = function () {
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('content').classList.add('blur');
+
+    const music = document.getElementById('bg-music');
+    music.volume = 0.3;
+    music.play();
+
+    const container = document.getElementById('confetti-container');
+    for (let i = 0; i < 100; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('confetti');
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.animationDelay = Math.random() * 5 + 's';
+      container.appendChild(dot);
+    }
+  };
+</script>
+
+</body>
+</html>
